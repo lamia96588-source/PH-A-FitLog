@@ -1,8 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getWorkout } from "@/lib/workouts";
+import { getAllWorkouts, getWorkout } from "@/lib/workouts";
 import { WorkoutActions } from "@/components/workout-actions";
 import { StarIcon } from "@/components/icons";
+
+// GitHub Pages serves a fully static build — every known id is
+// pre-rendered at build time and anything else is a hard 404.
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const workouts = await getAllWorkouts();
+  return workouts.map((workout) => ({ id: String(workout.id) }));
+}
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
