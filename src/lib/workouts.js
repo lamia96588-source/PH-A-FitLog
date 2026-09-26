@@ -18,22 +18,28 @@ const HOSTS = [
 const NUMERIC_FIELDS = ["duration", "caloriesBurned", "sets", "reps", "rating"];
 
 /**
- * Fetch JSON from the given URL, or return null on any failure
- * (network error, timeout, non-2xx status, or body that is not JSON).
+ * Fetch JSON from the given URL. Retries once after a short pause on
+ * transient failures (network error, timeout, 429, 5xx), since the public
+ * API rate-limits bursts. Returns null when the endpoint stays unusable.
  * @param {string} url
  * @returns {Promise<{ status: number, body: any } | null>}
  */
 async function fetchJson(url) {
-  try {
-    const res = await fetch(url, {
-      cache: "no-store",
-      signal: AbortSignal.timeout(12000),
-    });
-    const body = await res.json();
-    return { status: res.status, body };
-  } catch {
-    return null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(12000) });
+      if (res.status === 404) return { status: 404, body: null };
+      if (res.ok || (res.status !== 429 && res.status < 500)) {
+        return { status: res.status, body: await res.json() };
+      }
+    } catch {
+      // network error, timeout, or non-JSON body — fall through to retry
+    }
+    if (attempt === 0) {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+    }
   }
+  return null;
 }
 
 /**
@@ -72,33 +78,45 @@ function sanitizeList(list) {
   return result;
 }
 
+/** Build-time and per-instance memo of the full list. */
+let listCache = null;
+
 /**
  * Fetch every workout from the remote API, trying each host in order.
+ * The result is memoized, so repeated calls (generateStaticParams, the
+ * home page, detail pages) hit the API once per process — the public API
+ * rate-limits bursts during static builds.
  * @returns {Promise<object[]>} normalized workouts, or [] if every host fails
  */
 export async function getAllWorkouts() {
+  if (listCache) return listCache;
   for (const host of HOSTS) {
     const res = await fetchJson(`${host}/api/fitlog`);
     if (!res) continue;
     const list = extractList(res.body);
     if (!list) continue;
-    return sanitizeList(list);
+    listCache = sanitizeList(list);
+    return listCache;
   }
   return [];
 }
 
 /**
- * Fetch a single workout by id, trying each host in order.
- * The single endpoints proved reliable in testing (real id -> 200,
- * unknown id -> 404), so no list-and-find fallback is used.
+ * Fetch a single workout by id. Uses the memoized list when available;
+ * otherwise tries the single endpoint on each host, then falls back to
+ * fetching (and caching) the full list and finding the id there.
  * @param {string|number} id
  * @returns {Promise<object|null>} the workout, or null if not found
  *   or every host fails
  */
 export async function getWorkout(id) {
+  const wanted = String(id);
+  if (listCache) {
+    return listCache.find((item) => String(item.id) === wanted) ?? null;
+  }
   for (const host of HOSTS) {
     const res = await fetchJson(
-      `${host}/api/fitlog/${encodeURIComponent(String(id))}`
+      `${host}/api/fitlog/${encodeURIComponent(wanted)}`
     );
     if (!res) continue;
     if (res.status === 404) return null;
@@ -109,7 +127,8 @@ export async function getWorkout(id) {
     const [normalized] = sanitizeList([body]);
     return normalized;
   }
-  return null;
+  const list = await getAllWorkouts();
+  return list.find((item) => String(item.id) === wanted) ?? null;
 }
 
 /**
