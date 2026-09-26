@@ -5,7 +5,7 @@ live from the Fit Log API, stack up to five of them into today's plan, save
 lifts for later, and watch your exercise, minute, and calorie totals update in
 real time.
 
-- **Live site:** _add your Vercel URL here after deploying_
+- **Live site:** https://lamia96588-source.github.io/PH-A-FitLog/
 - **Repository:** https://github.com/lamia96588-source/PH-A-FitLog
 
 ## Features
@@ -50,6 +50,14 @@ Open http://localhost:3000 in your browser.
 npm run build
 npm start
 ```
+
+## Deployment
+
+The site is statically exported (`next.config.mjs` → `output: "export"`) and
+deployed to **GitHub Pages** by a GitHub Actions workflow
+(`.github/workflows/deploy.yml`) on every push to `main`. Pushes set
+`NEXT_PUBLIC_BASE_PATH=/PH-A-FitLog` so all assets resolve under the project
+path.
 
 ## API
 
