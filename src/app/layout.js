@@ -1,4 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { ToastProvider } from "@/context/toast-context";
 import { PlanProvider } from "@/context/plan-context";
 import "./globals.css";
@@ -25,9 +27,13 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-screen flex-col bg-background text-foreground">
         <ToastProvider>
-          <PlanProvider>{children}</PlanProvider>
+          <PlanProvider>
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </PlanProvider>
         </ToastProvider>
       </body>
     </html>
