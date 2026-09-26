@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fit Log — Workout Library & Planner
+
+Fit Log is a personal gym companion: browse a library of twelve lifts fetched
+live from the Fit Log API, stack up to five of them into today's plan, save
+lifts for later, and watch your exercise, minute, and calorie totals update in
+real time.
+
+- **Live site:** _add your Vercel URL here after deploying_
+- **Repository:** https://github.com/lamia96588-source/PH-A-FitLog
+
+## Features
+
+1. **Workout Library** — all twelve API workouts in a responsive grid
+   (3 columns on large screens) with muscle-group tags, equipment, and a
+   duration / calories / rating stats row on every card.
+2. **Search & Sort** — search by workout name or muscle group, and re-sort the
+   whole list with the "Sort By" dropdown (Duration, Calories, Rating).
+3. **Workout Details** — a dynamic detail page per lift with a full specs
+   table (equipment, difficulty, sets, reps, duration, calories, rating) and
+   step-by-step instructions.
+4. **Today's Plan** — add up to five lifts for the day (the add button
+   disables at the cap), mark them as done, and remove them; three metric
+   cards show live exercise, minute, and calorie totals.
+5. **Saved for Later** — bookmark any lift from its detail page and find it
+   again on the Saved tab.
+6. **Persistent & Reactive** — plan and saved lists survive page reloads via
+   localStorage, the navbar Plan/Saved badges update live, and every action
+   gets a toast. Includes a custom 404 page and loading skeletons.
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org) 16 (App Router, server components, dynamic
+  routes) with [React](https://react.dev) 19
+- [Tailwind CSS](https://tailwindcss.com) 4 for styling
+- No other runtime dependencies — toasts, icons, and plan state are custom
+  builds (React Context + `localStorage`)
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## API
 
-To learn more about Next.js, take a look at the following resources:
+Data comes from the Fit Log API. The app tries the primary host first and
+automatically fails over to the alternative:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. `https://api.abcz.workers.dev/api/fitlog`
+2. `https://api.api-store.workers.dev/api/fitlog`
