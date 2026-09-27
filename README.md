@@ -5,7 +5,7 @@ live from the Fit Log API, stack up to five of them into today's plan, save
 lifts for later, and watch your exercise, minute, and calorie totals update in
 real time.
 
-- **Live site:** https://lamia96588-source.github.io/PH-A-FitLog/
+- **Live link:** https://lamia96588-source.github.io/PH-A-FitLog/
 - **Repository:** https://github.com/lamia96588-source/PH-A-FitLog
 
 ## Features
