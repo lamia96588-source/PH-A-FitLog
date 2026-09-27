@@ -18,7 +18,7 @@ export function SiteFooter() {
           </span>
         </Link>
         <p className="text-sm text-zinc-500">
-          © 2026 Fit Log. All rights reserved.
+          © 2026 FitLog — Workout Library. Train hard, log honest.
         </p>
       </div>
     </footer>

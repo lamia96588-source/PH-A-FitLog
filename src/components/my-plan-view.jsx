@@ -43,6 +43,9 @@ export function MyPlanView() {
       <h1 className="text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">
         MY PLAN
       </h1>
+      <p className="mt-2 text-sm text-zinc-400">
+        Cap of five lifts for today. Finish them, then load more.
+      </p>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-3">
         <MetricCard label="Exercises" value={plan.length} />
@@ -142,7 +145,7 @@ function PlanRow({ item, onRemove, onToggleDone }) {
       />
       <div className="min-w-0 flex-1">
         <h3
-          className={`font-bold text-white ${item.done ? "line-through" : ""}`}
+          className={`font-bold uppercase text-white ${item.done ? "line-through" : ""}`}
         >
           {item.name}
         </h3>
@@ -192,7 +195,7 @@ function SavedRow({ item, onRemove }) {
         className="h-20 w-full rounded-xl object-cover sm:w-28"
       />
       <div className="min-w-0 flex-1">
-        <h3 className="font-bold text-white">{item.name}</h3>
+        <h3 className="font-bold uppercase text-white">{item.name}</h3>
         <p className="text-sm text-zinc-400">{item.equipment}</p>
         <StatsRow item={item} />
       </div>
@@ -224,7 +227,7 @@ function EmptyState() {
         NOTHING HERE YET
       </p>
       <p className="mt-2 text-sm text-zinc-500">
-        Browse the library and build today&apos;s five-lift plan.
+        Browse the library and add a lift to get today moving.
       </p>
       <Link
         href="/"

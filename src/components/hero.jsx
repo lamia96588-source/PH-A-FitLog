@@ -18,15 +18,26 @@ export function Hero() {
             LOG EVERY SET.
           </h1>
           <p className="mt-5 max-w-md text-base leading-7 text-zinc-400">
-            Fit Log is your personal gym companion — browse twelve coach-picked
-            lifts, stack a five-lift plan for today, and keep an eye on the
-            calories you are about to burn.
+            FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
+            into today&apos;s plan, and watch the week&apos;s work add up.
           </p>
           <a
             href="#library"
-            className="mt-8 inline-flex h-12 items-center rounded-full bg-accent px-7 text-sm font-bold uppercase tracking-wider text-zinc-950 transition-opacity hover:opacity-85"
+            className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-accent px-7 text-sm font-bold uppercase tracking-wider text-zinc-950 transition-opacity hover:opacity-85"
           >
             BROWSE WORKOUTS
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className="h-4 w-4"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </a>
         </div>
         <div className="flex justify-center md:justify-end">

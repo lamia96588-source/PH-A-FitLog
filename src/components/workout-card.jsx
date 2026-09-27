@@ -24,7 +24,7 @@ export function WorkoutCard({ workout }) {
             </span>
           ))}
         </div>
-        <h3 className="text-lg font-bold text-white transition-colors group-hover:text-accent">
+        <h3 className="text-lg font-bold uppercase text-white transition-colors group-hover:text-accent">
           {workout.name}
         </h3>
         <p className="text-sm text-zinc-400">{workout.equipment}</p>
