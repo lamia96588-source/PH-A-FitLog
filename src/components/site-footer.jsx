@@ -1,13 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
+import { assetUrl } from "@/lib/assets";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-white/10 bg-black">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 sm:flex-row">
         <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/logo.png"
+          <img
+            src={assetUrl("/logo.png")}
             alt="Fit Log logo"
             width={28}
             height={28}

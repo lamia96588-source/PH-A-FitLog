@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { usePlan } from "@/context/plan-context";
+import { assetUrl } from "@/lib/assets";
 
 const NAV_LINKS = [
   {
@@ -26,8 +26,8 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/85 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4">
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <Image
-            src="/logo.png"
+          <img
+            src={assetUrl("/logo.png")}
             alt="Fit Log logo"
             width={28}
             height={28}

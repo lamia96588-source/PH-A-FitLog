@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { assetUrl } from "@/lib/assets";
 
 export function Hero() {
   return (
@@ -30,12 +30,11 @@ export function Hero() {
           </a>
         </div>
         <div className="flex justify-center md:justify-end">
-          <Image
-            src="/banner.png"
+          <img
+            src={assetUrl("/banner.png")}
             alt="Lifter training in the gym"
             width={334}
             height={334}
-            priority
             className="h-auto w-full max-w-[380px] rounded-2xl border border-white/10 object-cover"
           />
         </div>
